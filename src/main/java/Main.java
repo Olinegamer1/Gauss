@@ -3,17 +3,17 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         double[][] mat = {
-                {3, 4, -9, 5},
-                {-15, -12, 50, -16},
-                {-27, -36, 73, 8},
-                {9, 12, -10, -16}
+                {1, 4, 8},
+                {3, 2, 2},
+                {2, 2, 8}
         };
-        double[][] vec = {{-14}, {44}, {142}, {-76}};
+        double[][] vec = {{1}, {3}, {7}};
 
         Matrix matrix = new Matrix(mat);
         Vector vector = new Vector(vec);
+
         double[] res = matrix.gaussSolve(vector);
-        TestUtils.print(matrix.vector);
         System.out.println(Arrays.toString(res));
+
     }
 }
