@@ -7,7 +7,7 @@ public class Main {
                 {3, 2, 2},
                 {2, 2, 8}
         };
-        double[][] vec = {{1}, {3}, {7}};
+        double[] vec = {1, 3, 7};
 
         Matrix matrix = new Matrix(mat);
         Vector vector = new Vector(vec);

@@ -12,7 +12,7 @@ public class Matrix {
 
     public double[] gaussSolve(Vector vector) {
         double[][] tempData = copy(data);
-        double[][] tempVector = copy(vector.getData());
+        double[] tempVector = Arrays.copyOf(vector.getData(), vector.size());
 
         if (tempVector.length != getRowDimension()) {
             throw new IllegalArgumentException(INCORRECT_VECTOR);
@@ -22,10 +22,10 @@ public class Matrix {
         return inverseStepGauss(tempVector, tempData);
     }
 
-    private double[] inverseStepGauss(double[][] vector, double[][] tempData) {
+    private double[] inverseStepGauss(double[] vector, double[][] tempData) {
         double[] result = new double[getColumnDimension()];
         for (int i = getRowDimension() - 1; i >= 0; i--) {
-            double temp = vector[i][0] / tempData[i][i];
+            double temp = vector[i] / tempData[i][i];
             for (int j = i + 1; j < getColumnDimension(); j++) {
                 result[i] -= (tempData[i][j] * result[j]) / tempData[i][i];
             }
@@ -34,7 +34,7 @@ public class Matrix {
         return result;
     }
 
-    private void convertToTriangle(double[][] vector, double[][] tempData) {
+    private void convertToTriangle(double[] vector, double[][] tempData) {
         for (int i = 0; i < getRowDimension(); i++) {
             int maxElement = maxColumnElement(i, tempData);
             swapLines(i, maxElement, vector, tempData);
@@ -42,8 +42,6 @@ public class Matrix {
                 transform(j, i, vector, tempData);
             }
         }
-        TestUtils.print(tempData);
-        TestUtils.print(vector);
     }
 
     private int maxColumnElement(int step, double[][] tempData) {
@@ -58,8 +56,8 @@ public class Matrix {
         return lineWithMaxElem;
     }
 
-    private void swapLines(int firstLine, int secondLine, double[][] vector, double[][] tempData) {
-        double[] bufferVector = vector[firstLine];
+    private void swapLines(int firstLine, int secondLine, double[] vector, double[][] tempData) {
+        double bufferVector = vector[firstLine];
         vector[firstLine] = vector[secondLine];
         vector[secondLine] = bufferVector;
 
@@ -68,10 +66,10 @@ public class Matrix {
         tempData[secondLine] = bufferMatrix;
     }
 
-    private void transform(int currentRow, int subtrahendRow, double[][] vector, double[][] tempData) {
+    private void transform(int currentRow, int subtrahendRow, double[] vector, double[][] tempData) {
         double scalingFactor = tempData[currentRow][subtrahendRow] /
                 tempData[subtrahendRow][subtrahendRow];
-        vector[currentRow][0] -= vector[subtrahendRow][0] * scalingFactor;
+        vector[currentRow] -= vector[subtrahendRow] * scalingFactor;
         for (int i = 0; i < getRowDimension(); i++) {
             tempData[currentRow][i] -= tempData[subtrahendRow][i] * scalingFactor;
         }

@@ -1,11 +1,14 @@
 public class Vector {
-    private final double[][] vector;
+    private final double[] vector;
 
-    public Vector(double[][] vector) {
+    public Vector(double[] vector) {
         this.vector = vector;
     }
 
-    public double[][] getData() {
+    public int size() {
+        return vector.length;
+    }
+    public double[] getData() {
         return vector;
     }
 }
